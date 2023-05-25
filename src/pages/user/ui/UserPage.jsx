@@ -5,7 +5,7 @@ import { UsersTable } from "../../../widgets/user/ui/UsersTable";
 function UserPage() {
   return (
     <Container>
-      <Container fluid="sm" style={{ maxWidth: "560px" }}>
+      <Container fluid="sm" className="mb-5" style={{ maxWidth: "560px" }}>
         <UserForm />
       </Container>
       <UsersTable />

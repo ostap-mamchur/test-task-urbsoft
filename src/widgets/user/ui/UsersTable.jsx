@@ -1,35 +1,42 @@
 import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
 import { UserRow } from "../../../entities/user/ui/UserRow";
+import { useEffect } from "react";
+import { useUserStore } from "../../../entities/user/model/store";
 
 function UsersTable() {
+  const users = useUserStore((state) => state.users);
+  const getUsers = useUserStore((state) => state.getUsers);
+  const gettingUsersStatus = useUserStore((state) => state.gettingUsersStatus);
 
-  
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-          <th>Phone number</th>
-          <th>Date of birth</th>
-        </tr>
-      </thead>
-      <tbody>
-        <UserRow
-          user={{
-            id: 1,
-            firstName: "ostap",
-            lastName: "Mamchur",
-            email: "mamchurostap26@gmail.com",
-            phoneNumber: "0730396895",
-            dateOfBirth: "2020-01-02",
-          }}
-        />
-      </tbody>
-    </Table>
+    <>
+      {["idle", "loading"].includes(gettingUsersStatus) ? (
+        <Spinner animation="border" variant="primary" />
+      ) : (
+        <Table bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone number</th>
+              <th>Date of birth</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <UserRow key={user.id} user={user} />
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </>
   );
 }
 

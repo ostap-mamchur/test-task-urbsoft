@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import InputGroup from "react-bootstrap/InputGroup";
 import { userFormSchema } from "../model/userFormSchema";
 import { useUserStore } from "../../../../entities/user/model/store";
@@ -15,6 +16,7 @@ const initialValues = {
 
 function UserForm() {
   const createUser = useUserStore((state) => state.createUser);
+  const creatingUserStatus = useUserStore((state) => state.creatingUserStatus);
 
   const onSubmit = (values) => {
     createUser(values);
@@ -104,7 +106,13 @@ function UserForm() {
           {errors.dateOfBirth}
         </Form.Control.Feedback>
       </Form.Group>
-      <Button type="submit">Create</Button>
+      <Button disabled={creatingUserStatus === "loading"} type="submit">
+        {creatingUserStatus === "loading" ? (
+          <Spinner animation="border" variant="primary" />
+        ) : (
+          "Create"
+        )}
+      </Button>
     </Form>
   );
 }
