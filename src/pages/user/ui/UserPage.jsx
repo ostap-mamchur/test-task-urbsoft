@@ -6,7 +6,7 @@ function UserPage() {
   const users = useUserStore((state) => state.users);
 
   return (
-    <Container fluid="sm">
+    <Container fluid="sm" style={{ maxWidth: "560px" }}>
       <UserForm />
       {JSON.stringify(users, null, " ")}
     </Container>

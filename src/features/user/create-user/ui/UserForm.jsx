@@ -20,7 +20,7 @@ function UserForm() {
     createUser(values);
   };
 
-  const { values, errors, handleChange, handleSubmit } = useFormik({
+  const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: userFormSchema,
     onSubmit,
@@ -28,7 +28,7 @@ function UserForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-2">
         <Form.Label htmlFor="firstName">First name</Form.Label>
         <Form.Control
           name="firstName"
@@ -36,13 +36,13 @@ function UserForm() {
           type="text"
           value={values.firstName}
           onChange={handleChange}
-          isInvalid={errors.firstName}
+          isInvalid={touched.firstName && errors.firstName}
         />
         <Form.Control.Feedback type="invalid">
           {errors.firstName}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-2">
         <Form.Label htmlFor="lastName">Last name</Form.Label>
         <Form.Control
           name="lastName"
@@ -50,13 +50,13 @@ function UserForm() {
           type="text"
           value={values.lastName}
           onChange={handleChange}
-          isInvalid={errors.lastName}
+          isInvalid={touched.lastName && errors.lastName}
         />
         <Form.Control.Feedback type="invalid">
           {errors.lastName}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-2">
         <Form.Label htmlFor="email">Email</Form.Label>
         <Form.Control
           name="email"
@@ -65,13 +65,13 @@ function UserForm() {
           placeholder="example@example.com"
           value={values.email}
           onChange={handleChange}
-          isInvalid={errors.email}
+          isInvalid={touched.email && errors.email}
         />
         <Form.Control.Feedback type="invalid">
           {errors.email}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-2">
         <Form.Label htmlFor="phoneNumber">Phone number</Form.Label>
         <InputGroup>
           <InputGroup.Text>+380</InputGroup.Text>
@@ -83,7 +83,7 @@ function UserForm() {
             type="tel"
             value={values.phoneNumber}
             onChange={handleChange}
-            isInvalid={errors.phoneNumber}
+            isInvalid={touched.phoneNumber && errors.phoneNumber}
           />
           <Form.Control.Feedback type="invalid">
             {errors.phoneNumber}
@@ -98,7 +98,7 @@ function UserForm() {
           type="date"
           value={values.dateOfBirth}
           onChange={handleChange}
-          isInvalid={errors.dateOfBirth}
+          isInvalid={touched.dateOfBirth && errors.dateOfBirth}
         />
         <Form.Control.Feedback type="invalid">
           {errors.dateOfBirth}
