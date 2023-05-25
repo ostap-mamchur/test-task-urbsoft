@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { userFormSchema } from "../model/userFormSchema";
+import { useUserStore } from "../../../../entities/user/model/store";
 
 const initialValues = {
   firstName: "",
@@ -13,17 +14,17 @@ const initialValues = {
 };
 
 function UserForm() {
+  const createUser = useUserStore((state) => state.createUser);
+
   const onSubmit = (values) => {
-    console.log(values);
+    createUser(values);
   };
 
-  const { values, handleChange, handleSubmit, errors } = useFormik({
+  const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: userFormSchema,
     onSubmit,
   });
-
-  console.log(errors);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -35,7 +36,11 @@ function UserForm() {
           type="text"
           value={values.firstName}
           onChange={handleChange}
+          isInvalid={errors.firstName}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.firstName}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label htmlFor="lastName">Last name</Form.Label>
@@ -45,7 +50,11 @@ function UserForm() {
           type="text"
           value={values.lastName}
           onChange={handleChange}
+          isInvalid={errors.lastName}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.lastName}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label htmlFor="email">Email</Form.Label>
@@ -56,21 +65,29 @@ function UserForm() {
           placeholder="example@example.com"
           value={values.email}
           onChange={handleChange}
+          isInvalid={errors.email}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.email}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label htmlFor="phoneNumber">Phone number</Form.Label>
         <InputGroup>
-          <InputGroup.Text id="phoneNumber">+380</InputGroup.Text>
+          <InputGroup.Text>+380</InputGroup.Text>
           <Form.Control
             name="phoneNumber"
             placeholder="50 123 45 56"
             aria-label="phoneNumber"
-            aria-describedby="phoneNumber"
+            id="phoneNumber"
             type="tel"
             value={values.phoneNumber}
             onChange={handleChange}
+            isInvalid={errors.phoneNumber}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.phoneNumber}
+          </Form.Control.Feedback>
         </InputGroup>
       </Form.Group>
       <Form.Group className="mb-3">
@@ -81,7 +98,11 @@ function UserForm() {
           type="date"
           value={values.dateOfBirth}
           onChange={handleChange}
+          isInvalid={errors.dateOfBirth}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.dateOfBirth}
+        </Form.Control.Feedback>
       </Form.Group>
       <Button type="submit">Create</Button>
     </Form>
