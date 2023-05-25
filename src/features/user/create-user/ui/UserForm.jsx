@@ -112,7 +112,13 @@ function UserForm() {
         type="submit"
       >
         {creatingUserStatus === statusTypes.LOADING ? (
-          <Spinner animation="border" variant="primary" />
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
         ) : (
           "Create"
         )}
