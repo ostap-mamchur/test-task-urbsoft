@@ -65,6 +65,13 @@ const useUserStore = create(
         state.currentPage -= 1;
       });
     },
+    setSearch: (search) => {
+      set((state) => {
+        state.search = search;
+        state.currentPage = 1;
+        state.cursors = {};
+      });
+    },
   }))
 );
 

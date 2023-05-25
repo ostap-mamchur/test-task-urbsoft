@@ -12,8 +12,6 @@ function UsersPagination() {
   const canGoBack = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
-  console.log({ count, currentPage, totalPages });
-
   return (
     <div className="d-flex justify-content-between">
       <span>{count} results</span>

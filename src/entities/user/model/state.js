@@ -6,6 +6,7 @@ const initialUserState = {
 
   currentPage: 1,
   cursors: {},
+  search: "",
 
   gettingUsersStatus: statusTypes.IDLE,
   creatingUserStatus: statusTypes.IDLE,
