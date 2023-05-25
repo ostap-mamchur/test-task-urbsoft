@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import InputGroup from "react-bootstrap/InputGroup";
 import { userFormSchema } from "../model/userFormSchema";
 import { useUserStore } from "../../../../entities/user/model/store";
+import { statusTypes } from "../../../../shared/lib/constants/store";
 
 const initialValues = {
   firstName: "",
@@ -106,8 +107,11 @@ function UserForm() {
           {errors.dateOfBirth}
         </Form.Control.Feedback>
       </Form.Group>
-      <Button disabled={creatingUserStatus === "loading"} type="submit">
-        {creatingUserStatus === "loading" ? (
+      <Button
+        disabled={creatingUserStatus === statusTypes.LOADING}
+        type="submit"
+      >
+        {creatingUserStatus === statusTypes.LOADING ? (
           <Spinner animation="border" variant="primary" />
         ) : (
           "Create"

@@ -1,8 +1,10 @@
+import { statusTypes } from "../../../shared/lib/constants/store";
+
 const initialUserState = {
   users: [],
 
-  gettingUsersStatus: "idle",
-  creatingUserStatus: "idle",
+  gettingUsersStatus: statusTypes.IDLE,
+  creatingUserStatus: statusTypes.IDLE,
 
   error: "",
 };

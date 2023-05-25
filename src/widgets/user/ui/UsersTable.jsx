@@ -3,6 +3,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { UserRow } from "../../../entities/user/ui/UserRow";
 import { useEffect } from "react";
 import { useUserStore } from "../../../entities/user/model/store";
+import { statusTypes } from "../../../shared/lib/constants/store";
 
 function UsersTable() {
   const users = useUserStore((state) => state.users);
@@ -15,7 +16,7 @@ function UsersTable() {
 
   return (
     <>
-      {["idle", "loading"].includes(gettingUsersStatus) ? (
+      {[statusTypes.IDLE, statusTypes.LOADING].includes(gettingUsersStatus) ? (
         <Spinner animation="border" variant="primary" />
       ) : (
         <Table bordered hover>
