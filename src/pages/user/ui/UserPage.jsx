@@ -1,14 +1,14 @@
 import Container from "react-bootstrap/Container";
 import { UserForm } from "../../../features/user/create-user/ui/UserForm";
-import { useUserStore } from "../../../entities/user/model/store";
+import { UsersTable } from "../../../widgets/user/ui/UsersTable";
 
 function UserPage() {
-  const users = useUserStore((state) => state.users);
-
   return (
-    <Container fluid="sm" style={{ maxWidth: "560px" }}>
-      <UserForm />
-      {JSON.stringify(users, null, " ")}
+    <Container>
+      <Container fluid="sm" style={{ maxWidth: "560px" }}>
+        <UserForm />
+      </Container>
+      <UsersTable />
     </Container>
   );
 }

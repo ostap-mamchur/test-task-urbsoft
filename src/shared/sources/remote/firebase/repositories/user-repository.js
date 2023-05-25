@@ -7,10 +7,11 @@ class UserRepository {
   }
 
   async createUser(userDetails) {
-    const doc = await addDoc(collection(this.db, this.collectionName), {
-      user: userDetails,
-    });
-    const user = { user: userDetails, id: doc.id };
+    const doc = await addDoc(
+      collection(this.db, this.collectionName),
+      userDetails
+    );
+    const user = { ...userDetails, id: doc.id };
     return user;
   }
 
