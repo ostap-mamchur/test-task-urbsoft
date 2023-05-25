@@ -17,6 +17,8 @@ const useUserStore = create(
 
         set((state) => {
           state.creatingUserStatus = statusTypes.SUCCEEDED;
+          state.currentPage = 1;
+          state.cursors = {};
         });
 
         get().getUsers();
@@ -33,10 +35,17 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.LOADING;
         });
 
-        const users = await userRepository.getUsers();
+        const { currentPage, cursors } = get();
+        const cursor = cursors[currentPage];
+
+        const { users, count, lastCursor } = await userRepository.getUsers({
+          cursor,
+        });
 
         set((state) => {
           state.users = users;
+          state.count = count;
+          state.cursors[currentPage + 1] = lastCursor;
           state.gettingUsersStatus = statusTypes.SUCCEEDED;
         });
       } catch (err) {
@@ -45,6 +54,16 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.FAILED;
         });
       }
+    },
+    nextPage: () => {
+      set((state) => {
+        state.currentPage += 1;
+      });
+    },
+    prevPage: () => {
+      set((state) => {
+        state.currentPage -= 1;
+      });
     },
   }))
 );

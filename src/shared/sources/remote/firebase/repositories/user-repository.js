@@ -1,4 +1,13 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getCountFromServer,
+  getDocs,
+  limit,
+  query,
+  startAfter,
+} from "firebase/firestore";
+import { usersPerPage } from "../../../../lib/constants/users-pagination";
 
 class UserRepository {
   constructor(db) {
@@ -15,9 +24,17 @@ class UserRepository {
     return user;
   }
 
-  async getUsers() {
+  async getUsers({ cursor } = {}) {
+    const constraints = [limit(usersPerPage)];
+
+    if (cursor) {
+      constraints.push(startAfter(cursor));
+    }
+
+    const usersCollectionRef = collection(this.db, this.collectionName);
+
     const querySnapshot = await getDocs(
-      collection(this.db, this.collectionName)
+      query(usersCollectionRef, ...constraints)
     );
 
     const users = querySnapshot.docs.map((doc) => ({
@@ -25,7 +42,19 @@ class UserRepository {
       id: doc.id,
     }));
 
-    return users;
+    const lastCursor = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    const count = await this.getUsersCount();
+
+    return { users, count, lastCursor };
+  }
+
+  async getUsersCount() {
+    const querySnapshot = await getCountFromServer(
+      collection(this.db, this.collectionName)
+    );
+
+    return querySnapshot.data().count;
   }
 }
 

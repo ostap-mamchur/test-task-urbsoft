@@ -10,10 +10,11 @@ function UsersTable() {
   const users = useUserStore((state) => state.users);
   const getUsers = useUserStore((state) => state.getUsers);
   const gettingUsersStatus = useUserStore((state) => state.gettingUsersStatus);
+  const currentPage = useUserStore((state) => state.currentPage);
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -38,9 +39,7 @@ function UsersTable() {
               ))}
             </tbody>
           </Table>
-          <div className="d-flex justify-content-center">
-            <UsersPagination />
-          </div>
+          <UsersPagination />
         </>
       )}
     </>
