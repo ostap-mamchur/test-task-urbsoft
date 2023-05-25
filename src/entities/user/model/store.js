@@ -1,14 +1,13 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { initialUserState } from "./state";
+import { userRepository } from "../../../shared/sources/remote/firebase";
 
 const useUserStore = create(
   immer((set) => ({
     ...initialUserState,
-    createUser: (user) => {
-      set((state) => {
-        state.users.push(user);
-      });
+    createUser: async (userDetails) => {
+      await userRepository.createUser(userDetails);
     },
   }))
 );
