@@ -1,0 +1,1 @@
+Можна використати spread оператoр, Object.assign, JSON.stringify/parse і зазвичай на практиці найчастіше я використовую lodash. 
