@@ -35,16 +35,8 @@ class UserRepository {
 
     if (search !== "") {
       constraints.push(
-        or(
-          and(
-            where("firstName", ">=", search),
-            where("firstName", "<=", search + "\uf8ff")
-          ),
-          and(
-            where("lastName", ">=", search),
-            where("lastName", "<=", search + "\uf8ff")
-          )
-        )
+        where("firstName", ">=", search),
+        where("firstName", "<=", search + "\uf8ff")
       );
     }
 
@@ -65,18 +57,25 @@ class UserRepository {
       id: doc.id,
     }));
 
-    console.log(users);
-
     const lastCursor = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-    const count = await this.getUsersCount();
+    const count = await this.getUsersCount({ search });
 
     return { users, count, lastCursor };
   }
 
   async getUsersCount({ search } = {}) {
+    const constraints = [];
+
+    if (search !== "") {
+      constraints.push(
+        where("firstName", ">=", search),
+        where("firstName", "<=", search + "\uf8ff")
+      );
+    }
+
     const querySnapshot = await getCountFromServer(
-      collection(this.db, this.collectionName)
+      query(collection(this.db, this.collectionName), ...constraints)
     );
 
     return querySnapshot.data().count;
