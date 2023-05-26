@@ -1,3 +1,6 @@
+/**
+ * Цей метод називається пошук вглиб графа або дерева
+ */
 function cloneDeep(object) {
   if (typeof object !== "object") {
     return object;
