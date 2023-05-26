@@ -35,18 +35,11 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.LOADING;
         });
 
-        const { currentPage, cursors, search } = get();
-        const cursor = cursors[currentPage];
-
-        const { users, count, lastCursor } = await userRepository.getUsers({
-          cursor,
-          search,
-        });
+        const { users, count } = await userRepository.getUsers();
 
         set((state) => {
           state.users = users;
           state.count = count;
-          state.cursors[currentPage + 1] = lastCursor;
           state.gettingUsersStatus = statusTypes.SUCCEEDED;
         });
       } catch (err) {

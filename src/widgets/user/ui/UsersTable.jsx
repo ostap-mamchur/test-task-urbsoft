@@ -6,17 +6,16 @@ import { useUserStore } from "../../../entities/user/model/store";
 import { statusTypes } from "../../../shared/lib/constants/store";
 import { UsersPagination } from "../../../features/user/users-pagination/ui/UsersPagination";
 import { FilterUsers } from "../../../features/user/filter-users/ui/FilterUsers";
+import { selectUsers } from "../../../entities/user/model/selectors";
 
 function UsersTable() {
-  const users = useUserStore((state) => state.users);
+  const users = useUserStore(selectUsers);
   const getUsers = useUserStore((state) => state.getUsers);
   const gettingUsersStatus = useUserStore((state) => state.gettingUsersStatus);
-  const currentPage = useUserStore((state) => state.currentPage);
-  const search = useUserStore((state) => state.search);
 
   useEffect(() => {
     getUsers();
-  }, [currentPage, search]);
+  }, []);
 
   return (
     <>
