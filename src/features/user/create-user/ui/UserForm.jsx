@@ -2,11 +2,11 @@ import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-import InputGroup from "react-bootstrap/InputGroup";
 import { userFormSchema } from "../model/userFormSchema";
 import { useUserStore } from "../../../../entities/user/model/store";
 import { statusTypes } from "../../../../shared/lib/constants/store";
 import { PhoneNumberInput } from "../../../../shared/ui/PhoneNumberInput";
+import { useUpdate } from "../../../../shared/lib/hooks/useUpdate";
 
 const initialValues = {
   firstName: "",
@@ -24,12 +24,35 @@ function UserForm() {
     createUser(values);
   };
 
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
-    useFormik({
-      initialValues,
-      validationSchema: userFormSchema,
-      onSubmit,
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
+    initialValues,
+    validationSchema: userFormSchema,
+    onSubmit,
+  });
+
+  const afterCreatingUserSucceeded = ([prevCreatingUserStatus]) => {
+    if (
+      creatingUserStatus === statusTypes.SUCCEEDED &&
+      prevCreatingUserStatus !== statusTypes.SUCCEEDED
+    ) {
+      resetForm();
+    }
+  };
+
+  useUpdate(
+    (prevDeps) => {
+      afterCreatingUserSucceeded(prevDeps);
+    },
+    [creatingUserStatus]
+  );
 
   return (
     <Form onSubmit={handleSubmit}>
