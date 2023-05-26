@@ -16,7 +16,7 @@ function FilterUsers() {
 
   return (
     <Form.Group className="mb-3">
-      <Form.Label>Search by first name or last name</Form.Label>
+      <Form.Label>Search by first name</Form.Label>
       <Form.Control
         onChange={debouncedSearchChange}
         type="text"
