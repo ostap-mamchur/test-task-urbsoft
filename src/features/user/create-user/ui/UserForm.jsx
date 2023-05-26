@@ -6,6 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { userFormSchema } from "../model/userFormSchema";
 import { useUserStore } from "../../../../entities/user/model/store";
 import { statusTypes } from "../../../../shared/lib/constants/store";
+import { PhoneNumberInput } from "../../../../shared/ui/PhoneNumberInput";
 
 const initialValues = {
   firstName: "",
@@ -23,11 +24,12 @@ function UserForm() {
     createUser(values);
   };
 
-  const { values, errors, touched, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    validationSchema: userFormSchema,
-    onSubmit,
-  });
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
+    useFormik({
+      initialValues,
+      validationSchema: userFormSchema,
+      onSubmit,
+    });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -74,25 +76,12 @@ function UserForm() {
           {errors.email}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-2">
-        <Form.Label htmlFor="phoneNumber">Phone number</Form.Label>
-        <InputGroup>
-          <InputGroup.Text>+380</InputGroup.Text>
-          <Form.Control
-            name="phoneNumber"
-            placeholder="50 123 45 56"
-            aria-label="phoneNumber"
-            id="phoneNumber"
-            type="tel"
-            value={values.phoneNumber}
-            onChange={handleChange}
-            isInvalid={touched.phoneNumber && errors.phoneNumber}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.phoneNumber}
-          </Form.Control.Feedback>
-        </InputGroup>
-      </Form.Group>
+      <PhoneNumberInput
+        value={values.phoneNumber}
+        onChange={(phoneNumber) => setFieldValue("phoneNumber", phoneNumber)}
+        error={errors.phoneNumber}
+        touched={touched.phoneNumber}
+      />
       <Form.Group className="mb-3">
         <Form.Label htmlFor="dateOfBirth">Date of birth</Form.Label>
         <Form.Control

@@ -1,21 +1,30 @@
-import InputGroup from "react-bootstrap/InputGroup";
+import "react-phone-number-input/style.css";
+import PhoneNumber from "react-phone-number-input";
 import Form from "react-bootstrap/Form";
-import React from "react";
+import { useMemo } from "react";
 
-function PhoneNumberInput({ value, onChange }) {
+function PhoneNumberInput({ onChange, value, error, touched }) {
+  const isInvalid = useMemo(() => touched && error, [error, touched]);
+
   return (
-    <InputGroup>
-      <InputGroup.Text id="phoneNumber">+380</InputGroup.Text>
-      <Form.Control
-        name="phoneNumber"
-        placeholder="50 123 45 56"
-        aria-label="phoneNumber"
-        aria-describedby="phoneNumber"
-        type="tel"
+    <Form.Group className="mb-2">
+      <Form.Label htmlFor="phoneNumber">Phone number</Form.Label>
+      <PhoneNumber
+        international
+        withCountryCallingCode
+        defaultCountry="UA"
+        placeholder="Enter phone number"
         value={value}
         onChange={onChange}
+        inputComponent={Form.Control}
+        isInvalid={isInvalid}
       />
-    </InputGroup>
+      {isInvalid && (
+        <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
+          {error}
+        </Form.Control.Feedback>
+      )}
+    </Form.Group>
   );
 }
 
