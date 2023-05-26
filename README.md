@@ -9,6 +9,7 @@ This project was written according to the [feature-sliced design](https://featur
 - NPM version: `5.2 or higher`
 - NODE.JS version: `14 or higher`
 
+
 ## How to run the project
 
 ---

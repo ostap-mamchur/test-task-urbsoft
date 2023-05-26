@@ -35,11 +35,10 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.LOADING;
         });
 
-        const { users, count } = await userRepository.getUsers();
+        const users = await userRepository.getUsers();
 
         set((state) => {
           state.users = users;
-          state.count = count;
           state.gettingUsersStatus = statusTypes.SUCCEEDED;
         });
       } catch (err) {
