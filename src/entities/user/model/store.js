@@ -35,11 +35,12 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.LOADING;
         });
 
-        const { currentPage, cursors } = get();
+        const { currentPage, cursors, search } = get();
         const cursor = cursors[currentPage];
 
         const { users, count, lastCursor } = await userRepository.getUsers({
           cursor,
+          search,
         });
 
         set((state) => {
@@ -49,6 +50,7 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.SUCCEEDED;
         });
       } catch (err) {
+        console.log(err);
         set((state) => {
           state.error = err.message;
           state.gettingUsersStatus = statusTypes.FAILED;
