@@ -1,12 +1,14 @@
 import Pagination from "react-bootstrap/Pagination";
 import { useUserStore } from "../../../../entities/user/model/store";
 import { usersPerPage } from "../../../../shared/lib/constants/users-pagination";
+import { selectUsers } from "../../../../entities/user/model/selectors";
 
 function UsersPagination() {
   const currentPage = useUserStore((state) => state.currentPage);
-  const count = useUserStore((state) => state.count);
+  const { count } = useUserStore(selectUsers);
   const nextPage = useUserStore((state) => state.nextPage);
   const prevPage = useUserStore((state) => state.prevPage);
+
 
   const totalPages = Math.ceil(count / usersPerPage);
   const canGoBack = currentPage > 1;

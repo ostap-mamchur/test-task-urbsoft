@@ -9,7 +9,7 @@ import { FilterUsers } from "../../../features/user/filter-users/ui/FilterUsers"
 import { selectUsers } from "../../../entities/user/model/selectors";
 
 function UsersTable() {
-  const users = useUserStore(selectUsers);
+  const { users } = useUserStore(selectUsers);
   const getUsers = useUserStore((state) => state.getUsers);
   const gettingUsersStatus = useUserStore((state) => state.gettingUsersStatus);
 

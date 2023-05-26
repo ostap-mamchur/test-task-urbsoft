@@ -8,14 +8,15 @@ const selectUsers = (state) => {
   if (search !== "") {
     filteredUsers = filteredUsers.filter(
       (user) =>
-        user.firstName.toLowerCase().includes(search) ||
-        user.lastName.toLowerCase().includes(search)
+        user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(search.toLowerCase())
     );
   }
+  const count = filteredUsers.length;
 
-  const offset = currentPage * usersPerPage;
+  const offset = (currentPage - 1) * usersPerPage;
 
-  return filteredUsers.slice(offset, offset + usersPerPage);
+  return { users: filteredUsers.slice(offset, offset + usersPerPage), count };
 };
 
 export { selectUsers };

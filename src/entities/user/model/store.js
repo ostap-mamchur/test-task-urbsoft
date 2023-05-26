@@ -43,7 +43,6 @@ const useUserStore = create(
           state.gettingUsersStatus = statusTypes.SUCCEEDED;
         });
       } catch (err) {
-        console.log(err);
         set((state) => {
           state.error = err.message;
           state.gettingUsersStatus = statusTypes.FAILED;
